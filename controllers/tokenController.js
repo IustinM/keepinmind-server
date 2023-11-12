@@ -2,7 +2,9 @@ import { tokenTypes, validateToken,generateToken } from "../utils/generateToken.
 
 export const regenerateTokenController = (req,res,next) =>{
 
- 
+    if(!req.cookies['refreshCookie']){
+        res.status(500).json({message:'Token is missing',missingToken:true})    
+    }
     const decodedRefresh = validateToken(req.cookies['refreshCookie'],tokenTypes.refreshToken);
   
     if(!decodedRefresh){

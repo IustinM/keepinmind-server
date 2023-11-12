@@ -15,9 +15,7 @@ export const postMovieController = (req, res, next) => {
         `INSERT INTO movies (${fields.join(', ')}) VALUES (${placeholders})`,
         values,
         (err, result) => {
-            console.log(result)
             if (err) {
-                // Log the error for debugging purposes (not shown here for brevity)
                 console.log(err)
                 return res.status(409).send('Something went wrong');
             }
@@ -31,7 +29,6 @@ export const getMoviesController = (req,res,next) =>{
         if(err){
            return res.status(400).send('Something went wrong');
         }
-        console.log('Result ok')
         res.status(200).json(result);
     })
 }
@@ -53,7 +50,6 @@ export const updateMoviesController = (req,res,next) =>{
 
 export const deleteMoviesController = (req,res,next) =>{
     const moviesId = req.params.id;
-    console.log(moviesId)
     const deleteValue = db.query('DELETE FROM movies WHERE id = ? ',[moviesId],(err,result)=>{
         if(err){
             return res.status(400).send('Something went wrong with the delete')

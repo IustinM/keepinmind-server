@@ -5,10 +5,7 @@ export const postBooksController = (req, res, next) => {
     const fields =  Object.keys(req.body.data);
     const placeholders = fields.map(() => '?').join(', ');
     const values = Object.values(req.body.data);
-  console.log(placeholders)
-    // if (!id || !title || !author || !description || enjoys.length <= 0 || dislikes.length <= 0 || learns.length <= 0 || feelings.length <= 0) {
-    //     return res.status(408).send("One or more fields are missing");
-    // }
+
     const idExists = db.query(`SELECT id FROM books WHERE id = ? `,[id],(err,result)=>{
         if(result.length >0){
             return res.status(404).send('Value already exists!');
@@ -18,9 +15,7 @@ export const postBooksController = (req, res, next) => {
         `INSERT INTO books (${fields.join(', ')}) VALUES (${placeholders})`,
         values,
         (err, result) => {
-            console.log(result)
             if (err) {
-                // Log the error for debugging purposes (not shown here for brevity)
                 console.log(err)
                 return res.status(409).send('Something went wrong');
             }

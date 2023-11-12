@@ -10,22 +10,25 @@ export const loginUserController = (req,res,next) =>{
     if(!email || !password){
         return res.status(500).json('Credentials needed')
     }
+
     if('accessCookie' in req.cookies && 'refreshCookie' in req.cookies){
         return res.status(400).send('User is already logged');
     }
+
     const userQuery = db.query('SELECT * FROM users WHERE email = ?',[email],(error,result,fields)=>{
         if(error){
             console.error('Something went wrong with the database:', error);
             return res.status(500).send('Something went wrong');
         }else{
             if(result.length > 0){
-                console.log(result);
                 if(!bcrypt.compareSync(password, result[0].password)){
                    return res.status(401).send('User credentials invalid');
                 }else{
+
                     const email = result[0].email;
                     const accessToken = generateToken(tokenTypes.accessToken,email);
-                    const refreshToken = generateToken(tokenTypes.refreshToken,email)
+                    const refreshToken = generateToken(tokenTypes.refreshToken,email);
+
                     res.cookie('accessCookie',accessToken,{
                         maxAge :3000000,
                         httpOnly:true,
@@ -80,25 +83,15 @@ export const registerUserController = (req,res) =>{
 export const getUserProfileController = (req,res,next) =>{
     
     const decodedAccess = validateToken(req.cookies['accessCookie'],tokenTypes.accessToken);
-
-    // if (decodedAccess === 'expired') {
-    //     return res.status(400).send('Token has expired');
-    // }
-    // if (decodedAccess) {
         const user =db.query('SELECT email,username FROM users WHERE email = ?',[decodedAccess.email],(err,result)=>{
             if(err){
                return res.status(400).send(err);
             }
             res.status(200).send(result[0]);
         });
-       
-    // } else {
-    //     res.status(400).send('Token is invalid');
-    // }
 }
 
 export const updateUserProfileController = (req,res,next) => {
-    console.log(req.body)
     try{
         const {email,username,newEmail,newUsername} =  req.body;
         const checkUser = db.query('SELECT * FROM users WHERE username = ? OR email = ?',[username,email],async (error,results)=>{
@@ -112,30 +105,24 @@ export const updateUserProfileController = (req,res,next) => {
                 const values = [];
                 let sqlString = ``;
                 if(newEmail && newUsername){
-                    console.log('gere2')
-                    sqlString=`UPDATE users SET email =? ,username=? WHERE email = ? AND username = ?`;
-                    console.log(newEmail,newUsername)
+                    sqlString=`UPDATE users SET email =? ,username=? WHERE email = ? AND username = ?`;          
                     values.push(newEmail)
                     values.push(newUsername)
                 }else if(newEmail && !newUsername){
-                    console.log('gere3')
                     values.push(newEmail)
                     sqlString=`UPDATE users SET email =? WHERE email = ? AND username = ?`;
                 }else if(!newEmail && newUsername){
-                    console.log('gere4')
                     values.push(newUsername)
                     sqlString=`UPDATE users SET username =? WHERE email = ? AND username = ?`;
                 }
             
                 const updateUser = db.query(sqlString,[...values,email,username],async (err,result)=>{
                     if(err){
-                        return res.status(400).send('Something went wrong with the update');
-                        
+                        return res.status(400).send('Something went wrong with the update'); 
                     }
                     const checkUser = db.query('SELECT * FROM users WHERE username = ? OR email = ?',[username,email],async (error,updateResult)=>{
                         if(error){
                             return res.status(400).send('Something went wrong with the result');
-
                         }
                         return res.status(200).json({message:'User updated successfully',email:updateResult[0].email,username:updateResult[0].username});
                     })
@@ -159,6 +146,7 @@ export const updatePasswordController = async (req, res, next) => {
 
         const user = results[0];
         const passwordMatch = await bcrypt.compare(newPassword, user.password);
+
         if (passwordMatch) {
             return res.status(401).json({ message: 'Password already used' });
         }
@@ -177,11 +165,9 @@ export const updatePasswordController = async (req, res, next) => {
         return res.status(500).json({ message: 'An error occurred while updating the password' });
     }
 };
-
  
 export const logoutUserController = (req,res,next) =>{
     res.clearCookie('accessCookie');
     res.clearCookie('refreshCookie');
-
     return res.status(200).json({ message: "Logged out successfully" });
 }

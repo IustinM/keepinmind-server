@@ -4,7 +4,8 @@ const db = mysql.createConnection({
     host: 'localhost', // Adresa IP a serverului MySQL
     user: 'root', // Numele utilizatorului MySQL
     password: '18082002', // Parola utilizatorului MySQL
-    database: 'keepinmind'
+    database: 'keepinmind',
+
 }) 
 
 export default db;

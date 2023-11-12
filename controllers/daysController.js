@@ -37,13 +37,10 @@ export const getDaysController = (req,res,next) =>{
 }
 export const updateDaysController = (req,res,next) =>{
 
-
-    const {id} = req.body.data;
     const fields =  Object.keys(req.body.data);
     fields.pop()
     const placeholders = fields.map(() => '?').join(', ');
     const values = Object.values(req.body.data);
-    console.log((fields.join('=?, '))+'=?',values)
     const updateDay = db.query(`UPDATE days SET ${fields.join('=?, ')+'=?'} WHERE id = ?`,values,(err,result)=>{
         if(err){
             console.log(err)

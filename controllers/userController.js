@@ -68,6 +68,7 @@ export const registerUserController = (req,res) =>{
                 const hashedPassword = await bcrypt.hash(password,parseInt(process.env.HASH_SALT));
                 const query = db.query('INSERT INTO users SET ?',{username:username,email:email,password:hashedPassword},(err,result)=>{
                     if(err){
+                        console.log(err)
                         res.status(500).send('Something went wrong');
                     }else{
                         res.status(200).json({message:'User created successfully'})

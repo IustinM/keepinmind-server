@@ -17,7 +17,6 @@ export const postDayController = (req, res, next) => {
         (err, result) => {
             console.log(result)
             if (err) {
-                // Log the error for debugging purposes (not shown here for brevity)
                 console.log(err)
                 return res.status(409).send('Something went wrong');
             }

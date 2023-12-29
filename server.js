@@ -11,7 +11,7 @@ import moviesRouter from './routes/moviesRoutes.js';
 const app = express();
 app.use(cookieParser());
 app.use(cors({
-    origin: 'http://localhost:3002',
+    origin: 'https://iustinm.github.io',
     credentials: true
 }));
 dotenv.config();
@@ -20,6 +20,9 @@ console.log( process.env.DB_HOST,  process.env.DB_USER,  process.env.DB_PASSWORD
 app.use('/',userRoutes);
 app.use('/books',booksRouter);
 app.use('/movies',moviesRouter);
+app.use('/get-data',(req,res)=>{
+    res.status(200).json({message:'Server is running ok'})
+})
 app.use('/days',daysRouter);
 app.use('/',tokenRoutes);
 

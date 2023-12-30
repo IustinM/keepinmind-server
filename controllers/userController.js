@@ -37,14 +37,14 @@ export const loginUserController = (req,res,next) =>{
                         maxAge :3000000,
                         httpOnly:true,
                         secure:true,
-                        sameSite:'none'
+                        sameSite:'None'
                     });
                     
                     res.cookie('refreshCookie',refreshToken,{
                         maxAge:14 * 24 * 60 * 60 * 1000,
                         httpOnly:true,
                         secure:true,
-                        sameSite:'none'
+                        sameSite:'None'
                     })
                     res.status(200).json({
                         message:'User logged successfully!',

@@ -29,13 +29,17 @@ export const loginUserController = (req,res,next) =>{
                     const accessToken = generateToken(tokenTypes.accessToken,email);
                     const refreshToken = generateToken(tokenTypes.refreshToken,email);
 
+                    console.log(accessToken);
+                    console.log(refreshToken);
+                    console.log('here')
+                    
                     res.cookie('accessCookie',accessToken,{
                         maxAge :3000000,
                         httpOnly:true,
                         secure:false,
                         sameSite:'strict'
                     });
-
+                    
                     res.cookie('refreshCookie',refreshToken,{
                         maxAge:14 * 24 * 60 * 60 * 1000,
                         httpOnly:true,
@@ -47,6 +51,7 @@ export const loginUserController = (req,res,next) =>{
                         username:result[0].username,
                         email:result[0].email,
                     });
+                    console.log(res.cookie)
                 }
             }else{
                 res.status(401).send('User credentials invalid');

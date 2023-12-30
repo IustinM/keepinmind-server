@@ -8,6 +8,6 @@ const db = mysql.createConnection({
     database: process.env.DB_DATABASE,
 
 }) 
-console.log(db)
+
 
 export default db;

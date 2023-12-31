@@ -35,14 +35,14 @@ export const loginUserController = (req,res,next) =>{
                     
                     res.cookie('accessCookie',accessToken,{
                         maxAge :3000000,
-                        httpOnly:true,
+                        httpsOnly:false,
                         secure:true,
                         sameSite:'None'
                     });
                     
                     res.cookie('refreshCookie',refreshToken,{
                         maxAge:14 * 24 * 60 * 60 * 1000,
-                        httpOnly:true,
+                        httpOnly:false,
                         secure:true,
                         sameSite:'None'
                     })

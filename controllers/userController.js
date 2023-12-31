@@ -35,7 +35,7 @@ export const loginUserController = (req,res,next) =>{
                     
                     res.cookie('accessCookie',accessToken,{
                         maxAge :3000000,
-                        httpsOnly:false,
+                        httpOnly:false,
                         secure:true,
                         sameSite:'None'
                     });

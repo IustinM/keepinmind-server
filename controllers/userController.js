@@ -29,21 +29,17 @@ export const loginUserController = (req,res,next) =>{
                     const accessToken = generateToken(tokenTypes.accessToken,email);
                     const refreshToken = generateToken(tokenTypes.refreshToken,email);
 
-                    console.log(accessToken);
-                    console.log(refreshToken);
-                    console.log('here')
-                    
                     res.cookie('accessCookie',accessToken,{
                         maxAge :3000000,
                         httpOnly:false,
-                        secure:true,
+                        secure:false,
                         sameSite:'None'
                     });
                     
                     res.cookie('refreshCookie',refreshToken,{
                         maxAge:14 * 24 * 60 * 60 * 1000,
                         httpOnly:false,
-                        secure:true,
+                        secure:false,
                         sameSite:'None'
                     })
                     res.status(200).json({

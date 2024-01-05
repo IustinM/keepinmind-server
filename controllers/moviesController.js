@@ -24,8 +24,8 @@ export const postMovieController = (req, res, next) => {
     );
 }
 export const getMoviesController = (req,res,next) =>{
- 
-    db.query(`SELECT * FROM movies`,(err,result) =>{
+    const email = req.body.email;
+    db.query(`SELECT * FROM movies WHERE  user_email = ?`,[email],(err,result) =>{
         if(err){
            return res.status(400).send('Something went wrong');
         }

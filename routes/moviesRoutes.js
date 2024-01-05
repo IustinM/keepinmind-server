@@ -7,7 +7,7 @@ const moviesRouter = express.Router();
 moviesRouter.use(verifyTokenMiddleware);
 moviesRouter.post('/',postMovieController);
 moviesRouter.put('/',updateMoviesController);
-moviesRouter.get('/',getMoviesController);
-moviesRouter.delete('/:id',deleteMoviesController);
+moviesRouter.post('/get-movies',getMoviesController);
+moviesRouter.post('/:id',deleteMoviesController);
 
 export default moviesRouter;

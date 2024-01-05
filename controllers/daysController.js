@@ -25,14 +25,15 @@ export const postDayController = (req, res, next) => {
     );
 }
 export const getDaysController = (req,res,next) =>{
- 
-    db.query(`SELECT * FROM days`,(err,result) =>{
+    const email = req.body.email;
+    db.query(`SELECT * FROM days WHERE  user_email = ?`,[email],(err,result) =>{
         if(err){
            return res.status(400).send('Something went wrong');
         }
         console.log('Result ok')
         res.status(200).json(result);
     })
+ 
 }
 export const updateDaysController = (req,res,next) =>{
 

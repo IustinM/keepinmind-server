@@ -7,7 +7,7 @@ const daysRouter = express.Router();
 daysRouter.use(verifyTokenMiddleware);
 daysRouter.post('/',postDayController);
 daysRouter.put('/',updateDaysController);
-daysRouter.get('/',getDaysController);
-daysRouter.delete('/:id',deleteDaysController);
+daysRouter.post('/get-days',getDaysController);
+daysRouter.post('/:id',deleteDaysController);
 
 export default daysRouter;

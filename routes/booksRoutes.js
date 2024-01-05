@@ -7,7 +7,7 @@ const booksRouter = express.Router();
 booksRouter.use(verifyTokenMiddleware);
 booksRouter.post('/',postBooksController);
 booksRouter.put('/',updateBooksController);
-booksRouter.get('/',getBooksController);
-booksRouter.delete('/:id',deleteBooksController);
+booksRouter.post('/get-books',getBooksController);
+booksRouter.post('/:id',deleteBooksController);
 
 export default booksRouter;

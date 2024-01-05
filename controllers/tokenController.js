@@ -26,7 +26,7 @@ export const regenerateTokenController = (req,res,next) =>{
         maxAge :3000000,
         httpOnly:true,
         secure:false,
-        sameSite:'strict'
+        sameSite:'None'
     });
     res.status(200).send('Token created successfully');
     

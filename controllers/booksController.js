@@ -24,7 +24,9 @@ export const postBooksController = (req, res, next) => {
     );
 }
 export const getBooksController = (req,res,next) =>{
-    db.query(`SELECT * FROM books`,(err,result) =>{
+    const email = req.body.email;
+    console.log('email:',email);
+    db.query(`SELECT * FROM books WHERE  user_email = ?`,[email],(err,result) =>{
         if(err){
            return res.status(400).send('Something went wrong');
         }

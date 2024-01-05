@@ -25,7 +25,7 @@ export const regenerateTokenController = (req,res,next) =>{
     res.cookie('accessCookie',newAcccessToken,{
         maxAge :3000000,
         httpOnly:true,
-        secure:false,
+        secure:true,
         sameSite:'None'
     });
     res.status(200).send('Token created successfully');
